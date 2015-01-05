@@ -1,0 +1,25 @@
+Author: Junius Santoso
+Last update : Dec 12 2014
+
+This repository includes the codes for the Indoor Localization Based Smart Lighting Project. The project uses 4 Estimote Beacons, 3 Phillips Hue Bulbs, and an Intel Galileo Board. The codes were run in Python 3.4.2
+
+The codes are breakdown as follow:
+
+main.py 		
+run this main code for starting the process (wrapper).
+
+rssiFetch.py 	
+contains the method for fetching the RSSI signal from the estimote beacons, this code is a modified version from the python script hosted at https://github.com/tholum/bluez repository.
+
+localization.py
+contains the methods for converting rssi signal into distance and localization based on finding a centroid of intersection points of 4 circles. Circles represent distance measurement from the beacons.
+For this project the beacons were placed at the 4 corners of the room.
+
+phue.py
+contains the methods for controlling the Phillips hue bulbs, refer to https://github.com/studioimaginaire/phue for more details.
+
+lookupHueValue.py
+contains the method for finding appropriate brightness input for each Hue bulb given a known location of the user. The brightness input values are stored in the hueLookupTable.xls file. The values stored in this file are generated using MATLAB and obtained by taking the pseudoinverse of the matrix X and multiplied it with matrix I. Matrix X is given as cos(theta_n)/(d_n)^2 where theta_n is the angle of light distribution from the n-th light source and d_n is the distance from the light source to the user position. Matrix I is a single matrix containing the desired illumination.
+
+characterizeRSSI.py
+this script was used to characterize the RSSI signal of the beacons by taking 100 measurement and then saving it to a xls file. The relationship between the RSSI signal and distance away from the beacon is given by the logarithmic-path loss of radio signal. However, the experiment data seems to suggest that the relationship looks more like exponential.
